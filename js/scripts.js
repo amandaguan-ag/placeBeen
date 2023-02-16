@@ -3,7 +3,7 @@ function Passport() {
   this.places = [];
 }
 
-Passport.prototype.addDestination = function(destination) {
+Passport.prototype.addPlace = function(destination) {
   this.places.push(destination);
 }
 Passport.prototype.findByLocation = function(location) {
@@ -17,43 +17,41 @@ Passport.prototype.findByLocation = function(location) {
   return false;
 }
 
-function Destination(location, landmarks, timeOfYear) {
+function Place(location, landmarks, timeOfYear) {
   this.location = location;
   this.landmarks = landmarks;
   this.timeOfYear = timeOfYear;
 }
-Destination.prototype.showDetails = function() {
+Place.prototype.showDetails = function() {
 return 'I went to ' + this.location + ' in the ' + this.timeOfYear + ", while I was here I went to " + this.landmarks + '.';
 }
 
-
-
-
 // JavaScript code
-let almaPassport = new Passport();
-let springBreak = new Destination("Daytona Beach", "parties", "spring");
-let camping = new Destination("Buck Lake", "lake", "summer");
-let skiing = new Destination("Baker", 'snow', 'winter');
-almaPassport.addDestination(springBreak);
-almaPassport.addDestination(skiing);
-almaPassport.addDestination(camping);
+let newPassort = new Passport();
+let springBreak = new Place("Daytona Beach", "parties", "spring");
+let camping = new Place("Buck Lake", "lake", "summer");
+let skiing = new Place("Baker", 'snow', 'winter');
+newPassort.addPlace(springBreak);
+newPassort.addPlace(skiing);
+newPassort.addPlace(camping);
 
-//User logic //
-window.addEventListener("load", function (){
-
-almaPassport.places.forEach( function (element) {
+//User logic
+function listPlaces() { 
+newPassort.places.forEach( function (element) {
 const li = document.createElement("li");
 li.textContent = element.location;
 document.querySelector('#placesList').appendChild(li);
 });
+}
 
+function displayPlaces(){
 const placesList = document.querySelectorAll("#placesList li");
 placesList.forEach(function(place) {
 place.addEventListener("click", function() {
 const resultList = document.querySelector('#resultList');
 resultList.textContent = '';
 document.querySelector('#resultCard').style.display = 'block';
-let place = almaPassport.findByLocation(this.textContent);
+let place = newPassort.findByLocation(this.textContent);
 document.querySelector('#resultHeader').textContent = place.showDetails();
 const li1 = document.createElement("li");
 li1.textContent = place.landmarks;
@@ -63,5 +61,8 @@ li2.textContent = place.timeOfYear;
 resultList.appendChild(li2);
 });
 });
-
+}
+window.addEventListener("load", function (){
+  listPlaces();
+  displayPlaces()
 });
