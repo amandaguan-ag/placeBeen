@@ -1,0 +1,18 @@
+#resultCard{
+  display: none;
+}
+body{
+  background-color: beige;
+}
+.jumbotron{
+  padding-top: 25px;
+}
+
+.container{
+  padding-bottom: 25px;
+  padding-top: 25px;
+}
+.card{
+  padding-top: 25px;
+  margin-top: 25px;
+}
