@@ -1,12 +1,20 @@
 //business logic//
-function Passport() {
+function Footprint() {
   this.places = [];
+  this.currentId  = 0;
 }
 
-Passport.prototype.addPlace = function(destination) {
-  this.places.push(destination);
+Footprint.prototype.addPlace = function (place){
+  place.id = this.assignId();
+  this.places[place.id] = place;
 }
-Passport.prototype.findByLocation = function(location) {
+
+Footprint.prototype.assignId = function() {
+  this.currentId += 1;
+  return this.currentId;
+};
+
+Footprint.prototype.findPlace = function(location) {
   for (let i=0; i< this.places.length; i++) {
     if (this.places[i]){
       if (this.places[i].location == location){
@@ -23,21 +31,21 @@ function Place(location, landmarks, timeOfYear) {
   this.timeOfYear = timeOfYear;
 }
 Place.prototype.showDetails = function() {
-return 'I went to ' + this.location + ' in the ' + this.timeOfYear + ", while I was here I went to " + this.landmarks + '.';
-}
+  return 'I went to ' + this.location + ' in the ' + this.timeOfYear + ", while I was here I went to " + this.landmarks + '.';
+  }
 
 // JavaScript code
-let newPassort = new Passport();
-let springBreak = new Place("Daytona Beach", "parties", "spring");
-let camping = new Place("Buck Lake", "lake", "summer");
-let skiing = new Place("Baker", 'snow', 'winter');
-newPassort.addPlace(springBreak);
-newPassort.addPlace(skiing);
-newPassort.addPlace(camping);
+let newFootprint = new Footprint();
+let sea = new Place("Seattle", "Space Needle", "winter");
+let ny = new Place("New York", "Empire Tower", "spring");
+let van = new Place("Vancouer", 'night market', 'summer');
+newFootprint.addPlace(sea);
+newFootprint.addPlace(ny);
+newFootprint.addPlace(van);
 
 //User logic
 function listPlaces() { 
-newPassort.places.forEach( function (element) {
+  newFootprint.places.forEach( function (element) {
 const li = document.createElement("li");
 li.textContent = element.location;
 document.querySelector('#placesList').appendChild(li);
@@ -51,7 +59,7 @@ place.addEventListener("click", function() {
 const resultList = document.querySelector('#resultList');
 resultList.textContent = '';
 document.querySelector('#resultCard').style.display = 'block';
-let place = newPassort.findByLocation(this.textContent);
+let place = newFootprint.findPlace(this.textContent);
 document.querySelector('#resultHeader').textContent = place.showDetails();
 const li1 = document.createElement("li");
 li1.textContent = place.landmarks;
